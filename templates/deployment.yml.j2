@@ -1,0 +1,86 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ kubernetes_sickrage_deployment }}
+  namespace: {{ kubernetes_sickrage_namespace }}
+  labels:
+    app: {{ kubernetes_sickrage_app }}
+{% if kubernetes_sickrage_deployment_labels %}
+    {{ kubernetes_sickrage_deployment_labels | to_nice_yaml | indent(4) }}
+{% endif %}
+{% if kubernetes_sickrage_deployment_annotations %}
+  annotations:
+    {{ kubernetes_sickrage_deployment_annotations | to_nice_yaml | indent(4) }}
+{% endif %}
+spec:
+  replicas: {{ kubernetes_sickrage_replicas }}
+  revisionHistoryLimit: {{ kubernetes_sickrage_revision_history }}
+  selector:
+    matchLabels:
+      app: {{ kubernetes_sickrage_app }}
+  template:
+    metadata:
+      labels:
+        app: {{ kubernetes_sickrage_app }}
+    spec:
+      containers:
+      - image: {{ kubernetes_sickrage_image }}
+        imagePullPolicy: Always
+        name: sickrage
+        resources:
+          {{ kubernetes_sickrage_resources | to_yaml | indent(10) }}
+        ports:
+        - name: sickrage
+          containerPort: 8081
+        readinessProbe:
+          httpGet:
+            path: /
+            port: sickrage
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: sickrage
+          initialDelaySeconds: 30
+          periodSeconds: 20
+        volumeMounts:
+        - mountPath: /config
+          name: sickrage-config
+          {% if kubernetes_sickrage_config_volume.subPath is defined %}subPath: {{ kubernetes_sickrage_config_volume.subPath }}{% endif %}
+
+{% for k, v in kubernetes_sickrage_downloads_volumes.items() %}
+        - mountPath: /downloads/{{ k }}
+          name: sickrage-downloads-{{ k }}
+          {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
+
+{% endfor %}
+{% for k, v in kubernetes_sickrage_tv_volumes.items() %}
+        - mountPath: /tv/{{ k }}
+          name: sickrage-tv-{{ k }}
+          {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
+
+{% endfor %}
+{% for k, v in kubernetes_sickrage_watchdirs_volumes.items() %}
+        - mountPath: /watchdirs/{{ k }}
+          name: sickrage-watchdirs-{{ k }}
+          {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
+
+{% endfor %}
+{% if kubernetes_sickrage_node_selector|default({}) %}
+      nodeSelector:
+        {{ kubernetes_sickrage_node_selector | to_yaml | indent(8) }}
+{% endif %}
+      volumes:
+      - {name: sickrage-config, {{ kubernetes_sickrage_config_volume.definition | to_yaml }}}
+{% for k, v in kubernetes_sickrage_downloads_volumes.items() %}
+      - {name: sickrage-downloads-{{ k }}, {{ v.definition | to_yaml }}}
+{% endfor %}
+{% for k, v in kubernetes_sickrage_tv_volumes.items() %}
+      - {name: sickrage-tv-{{ k }}, {{ v.definition | to_yaml }}}
+{% endfor %}
+{% for k, v in kubernetes_sickrage_watchdirs_volumes.items() %}
+      - {name: sickrage-watchdirs-{{ k }}, {{ v.definition | to_yaml }}}
+{% endfor %}
+      restartPolicy: Always
+status: {}

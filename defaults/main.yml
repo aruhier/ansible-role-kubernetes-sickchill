@@ -1,0 +1,37 @@
+---
+
+kubernetes_sickrage_image: "linuxserver/sickrage:latest"
+
+kubernetes_sickrage_namespace: "default"
+kubernetes_sickrage_deployment: "sickrage-deployment"
+kubernetes_sickrage_app: "sickrage"
+kubernetes_sickrage_service: "sickrage"
+
+kubernetes_sickrage_node_selector: {}
+kubernetes_sickrage_replicas: 1
+kubernetes_sickrage_revision_history: 1
+
+kubernetes_sickrage_deployment_labels: {}
+kubernetes_sickrage_deployment_annotations: {}
+
+kubernetes_sickrage_resources:
+  limits:
+    memory: "756Mi"
+  requests:
+    memory: "256Mi"
+
+kubernetes_sickrage_downloads_volumes: {}
+kubernetes_sickrage_tv_volumes: {}
+kubernetes_sickrage_watchdirs_volumes: {}
+
+kubernetes_sickrage_config_volume:
+  definition:
+
+kubernetes_sickrage_setup_ingress: false
+kubernetes_sickrage_ingress:
+  name: "sickrage-ingress"
+  host: "sickrage.example.com"
+  annotations:
+  tls:
+
+# vim: set ts=2 sw=2:
