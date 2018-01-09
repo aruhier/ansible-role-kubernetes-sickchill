@@ -32,17 +32,11 @@ spec:
         ports:
         - name: sickrage
           containerPort: 8081
-        readinessProbe:
-          httpGet:
-            path: /
-            port: sickrage
-          initialDelaySeconds: 10
-          periodSeconds: 5
         livenessProbe:
           httpGet:
             path: /
             port: sickrage
-          initialDelaySeconds: 30
+          initialDelaySeconds: 60
           periodSeconds: 20
         volumeMounts:
         - mountPath: /config
