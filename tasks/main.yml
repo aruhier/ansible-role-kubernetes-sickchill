@@ -1,6 +1,6 @@
 ---
 
-- name: Install sickrage
+- name: Install sickchill
   command: kubectl apply -f -
   args:
     stdin: "{{ item }}"
@@ -12,6 +12,6 @@
   command: kubectl apply -f -
   args:
     stdin: "{{ lookup('template', 'ingress.yml.j2') }}"
-  when: kubernetes_sickrage_setup_ingress
+  when: kubernetes_sickchill_setup_ingress
 
 # vim: set ts=2 sw=2:

@@ -1,36 +1,36 @@
 ---
 
-kubernetes_sickrage_image: "linuxserver/sickrage:latest"
+kubernetes_sickchill_image: "linuxserver/sickchill:latest"
 
-kubernetes_sickrage_namespace: "default"
-kubernetes_sickrage_deployment: "sickrage-deployment"
-kubernetes_sickrage_app: "sickrage"
-kubernetes_sickrage_service: "sickrage"
+kubernetes_sickchill_namespace: "default"
+kubernetes_sickchill_deployment: "sickchill-deployment"
+kubernetes_sickchill_app: "sickchill"
+kubernetes_sickchill_service: "sickchill"
 
-kubernetes_sickrage_node_selector: {}
-kubernetes_sickrage_replicas: 1
-kubernetes_sickrage_revision_history: 1
+kubernetes_sickchill_node_selector: {}
+kubernetes_sickchill_replicas: 1
+kubernetes_sickchill_revision_history: 1
 
-kubernetes_sickrage_deployment_labels: {}
-kubernetes_sickrage_deployment_annotations: {}
+kubernetes_sickchill_deployment_labels: {}
+kubernetes_sickchill_deployment_annotations: {}
 
-kubernetes_sickrage_resources:
+kubernetes_sickchill_resources:
   limits:
     memory: "756Mi"
   requests:
     memory: "256Mi"
 
-kubernetes_sickrage_downloads_volumes: {}
-kubernetes_sickrage_tv_volumes: {}
-kubernetes_sickrage_watchdirs_volumes: {}
+kubernetes_sickchill_downloads_volumes: {}
+kubernetes_sickchill_tv_volumes: {}
+kubernetes_sickchill_watchdirs_volumes: {}
 
-kubernetes_sickrage_config_volume:
+kubernetes_sickchill_config_volume:
   definition:
 
-kubernetes_sickrage_setup_ingress: false
-kubernetes_sickrage_ingress:
-  name: "sickrage-ingress"
-  host: "sickrage.example.com"
+kubernetes_sickchill_setup_ingress: false
+kubernetes_sickchill_ingress:
+  name: "sickchill-ingress"
+  host: "sickchill.example.com"
   annotations:
   tls:
 

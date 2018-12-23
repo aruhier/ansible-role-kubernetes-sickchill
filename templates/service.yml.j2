@@ -1,11 +1,11 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ kubernetes_sickrage_service }}
-  namespace: {{ kubernetes_sickrage_namespace }}
+  name: {{ kubernetes_sickchill_service }}
+  namespace: {{ kubernetes_sickchill_namespace }}
 spec:
   selector:
-    app: {{ kubernetes_sickrage_app }}
+    app: {{ kubernetes_sickchill_app }}
   ports:
     - port: 80
-      targetPort: sickrage
+      targetPort: sickchill

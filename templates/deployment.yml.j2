@@ -1,80 +1,80 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ kubernetes_sickrage_deployment }}
-  namespace: {{ kubernetes_sickrage_namespace }}
+  name: {{ kubernetes_sickchill_deployment }}
+  namespace: {{ kubernetes_sickchill_namespace }}
   labels:
-    app: {{ kubernetes_sickrage_app }}
-{% if kubernetes_sickrage_deployment_labels %}
-    {{ kubernetes_sickrage_deployment_labels | to_nice_yaml | indent(4) }}
+    app: {{ kubernetes_sickchill_app }}
+{% if kubernetes_sickchill_deployment_labels %}
+    {{ kubernetes_sickchill_deployment_labels | to_nice_yaml | indent(4) }}
 {% endif %}
-{% if kubernetes_sickrage_deployment_annotations %}
+{% if kubernetes_sickchill_deployment_annotations %}
   annotations:
-    {{ kubernetes_sickrage_deployment_annotations | to_nice_yaml | indent(4) }}
+    {{ kubernetes_sickchill_deployment_annotations | to_nice_yaml | indent(4) }}
 {% endif %}
 spec:
-  replicas: {{ kubernetes_sickrage_replicas }}
-  revisionHistoryLimit: {{ kubernetes_sickrage_revision_history }}
+  replicas: {{ kubernetes_sickchill_replicas }}
+  revisionHistoryLimit: {{ kubernetes_sickchill_revision_history }}
   selector:
     matchLabels:
-      app: {{ kubernetes_sickrage_app }}
+      app: {{ kubernetes_sickchill_app }}
   template:
     metadata:
       labels:
-        app: {{ kubernetes_sickrage_app }}
+        app: {{ kubernetes_sickchill_app }}
     spec:
       containers:
-      - image: {{ kubernetes_sickrage_image }}
+      - image: {{ kubernetes_sickchill_image }}
         imagePullPolicy: Always
-        name: sickrage
+        name: sickchill
         resources:
-          {{ kubernetes_sickrage_resources | to_yaml | indent(10) }}
+          {{ kubernetes_sickchill_resources | to_yaml | indent(10) }}
         ports:
-        - name: sickrage
+        - name: sickchill
           containerPort: 8081
         livenessProbe:
           httpGet:
             path: /
-            port: sickrage
+            port: sickchill
           initialDelaySeconds: 60
           periodSeconds: 20
         volumeMounts:
         - mountPath: /config
-          name: sickrage-config
-          {% if kubernetes_sickrage_config_volume.subPath is defined %}subPath: {{ kubernetes_sickrage_config_volume.subPath }}{% endif %}
+          name: sickchill-config
+          {% if kubernetes_sickchill_config_volume.subPath is defined %}subPath: {{ kubernetes_sickchill_config_volume.subPath }}{% endif %}
 
-{% for k, v in kubernetes_sickrage_downloads_volumes.items() %}
+{% for k, v in kubernetes_sickchill_downloads_volumes.items() %}
         - mountPath: /downloads/{{ k }}
-          name: sickrage-downloads-{{ k }}
+          name: sickchill-downloads-{{ k }}
           {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
 
 {% endfor %}
-{% for k, v in kubernetes_sickrage_tv_volumes.items() %}
+{% for k, v in kubernetes_sickchill_tv_volumes.items() %}
         - mountPath: /tv/{{ k }}
-          name: sickrage-tv-{{ k }}
+          name: sickchill-tv-{{ k }}
           {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
 
 {% endfor %}
-{% for k, v in kubernetes_sickrage_watchdirs_volumes.items() %}
+{% for k, v in kubernetes_sickchill_watchdirs_volumes.items() %}
         - mountPath: /watchdirs/{{ k }}
-          name: sickrage-watchdirs-{{ k }}
+          name: sickchill-watchdirs-{{ k }}
           {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
 
 {% endfor %}
-{% if kubernetes_sickrage_node_selector|default({}) %}
+{% if kubernetes_sickchill_node_selector|default({}) %}
       nodeSelector:
-        {{ kubernetes_sickrage_node_selector | to_yaml | indent(8) }}
+        {{ kubernetes_sickchill_node_selector | to_yaml | indent(8) }}
 {% endif %}
       volumes:
-      - {name: sickrage-config, {{ kubernetes_sickrage_config_volume.definition | to_yaml }}}
-{% for k, v in kubernetes_sickrage_downloads_volumes.items() %}
-      - {name: sickrage-downloads-{{ k }}, {{ v.definition | to_yaml }}}
+      - {name: sickchill-config, {{ kubernetes_sickchill_config_volume.definition | to_yaml }}}
+{% for k, v in kubernetes_sickchill_downloads_volumes.items() %}
+      - {name: sickchill-downloads-{{ k }}, {{ v.definition | to_yaml }}}
 {% endfor %}
-{% for k, v in kubernetes_sickrage_tv_volumes.items() %}
-      - {name: sickrage-tv-{{ k }}, {{ v.definition | to_yaml }}}
+{% for k, v in kubernetes_sickchill_tv_volumes.items() %}
+      - {name: sickchill-tv-{{ k }}, {{ v.definition | to_yaml }}}
 {% endfor %}
-{% for k, v in kubernetes_sickrage_watchdirs_volumes.items() %}
-      - {name: sickrage-watchdirs-{{ k }}, {{ v.definition | to_yaml }}}
+{% for k, v in kubernetes_sickchill_watchdirs_volumes.items() %}
+      - {name: sickchill-watchdirs-{{ k }}, {{ v.definition | to_yaml }}}
 {% endfor %}
       restartPolicy: Always
 status: {}

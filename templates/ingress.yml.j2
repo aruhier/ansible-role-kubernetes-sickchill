@@ -1,22 +1,22 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ kubernetes_sickrage_ingress.name }}
-  namespace: {{ kubernetes_sickrage_namespace }}
-{% if kubernetes_sickrage_ingress.annotations %}
+  name: {{ kubernetes_sickchill_ingress.name }}
+  namespace: {{ kubernetes_sickchill_namespace }}
+{% if kubernetes_sickchill_ingress.annotations %}
   annotations:
-    {{ kubernetes_sickrage_ingress.annotations | to_nice_yaml | indent }}
+    {{ kubernetes_sickchill_ingress.annotations | to_nice_yaml | indent }}
 {% endif %}
 spec:
-{% if kubernetes_sickrage_ingress.tls %}
+{% if kubernetes_sickchill_ingress.tls %}
   tls:
-    {{ kubernetes_sickrage_ingress.tls | to_nice_yaml | indent }}
+    {{ kubernetes_sickchill_ingress.tls | to_nice_yaml | indent }}
 {% endif %}
   rules:
-  - host: {{ kubernetes_sickrage_ingress.host }}
+  - host: {{ kubernetes_sickchill_ingress.host }}
     http:
       paths:
       - path: /
         backend:
-          serviceName: {{ kubernetes_sickrage_service }}
+          serviceName: {{ kubernetes_sickchill_service }}
           servicePort: 80

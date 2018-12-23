@@ -1,47 +1,47 @@
-Ansible Role: Sickrage for Kubernetes
+Ansible Role: sickchill for Kubernetes
 =====================================
 
-Ansible role to install [Sickrage](https://sickrage.github.io/) on Kubernetes.
+Ansible role to install [sickchill](https://sickchill.github.io/) on Kubernetes.
 
 Role Variables
 --------------
 
 ```yaml
 # Image used
-kubernetes_sickrage_image: "linuxserver/sickrage:latest"
+kubernetes_sickchill_image: "linuxserver/sickchill:latest"
 
 # Namespace
-kubernetes_sickrage_namespace: "default"
+kubernetes_sickchill_namespace: "default"
 # App name (used as selector)
-kubernetes_sickrage_app: "sickrage"
+kubernetes_sickchill_app: "sickchill"
 # Deployment name
-kubernetes_sickrage_deployment: "sickrage-deployment"
+kubernetes_sickchill_deployment: "sickchill-deployment"
 # Service name
-kubernetes_sickrage_service: "sickrage"
+kubernetes_sickchill_service: "sickchill"
 
 # Number of replicas
-kubernetes_sickrage_replicas: 1
-kubernetes_sickrage_revision_history: 1
+kubernetes_sickchill_replicas: 1
+kubernetes_sickchill_revision_history: 1
 
 # Node selector
-kubernetes_sickrage_node_selector: {}
+kubernetes_sickchill_node_selector: {}
 
 # Add custom labels in the deployment metadata section
-kubernetes_sickrage_deployment_labels: {}
+kubernetes_sickchill_deployment_labels: {}
 # Add custom annotations in the deployment metadata section
-kubernetes_sickrage_deployment_annotations: {}
+kubernetes_sickchill_deployment_annotations: {}
 
-kubernetes_sickrage_resources:
+kubernetes_sickchill_resources:
   limits:
     memory: "756Mi"
   requests:
     memory: "256Mi"
 
-# Setup ingress for sickrage
-kubernetes_sickrage_setup_ingress: false
-kubernetes_sickrage_ingress:
-  name: "sickrage-ingress"
-  host: "sickrage.example.com"
+# Setup ingress for sickchill
+kubernetes_sickchill_setup_ingress: false
+kubernetes_sickchill_ingress:
+  name: "sickchill-ingress"
+  host: "sickchill.example.com"
   annotations:
   tls:
 
@@ -51,15 +51,15 @@ kubernetes_sickrage_ingress:
 # exactly what would be in a Kkubernetes pod manifest.
 
 # Downloads volumes. Mounted in /downloads/ (see examples for more details)
-kubernetes_sickrage_downloads_volumes: {}
+kubernetes_sickchill_downloads_volumes: {}
 # TV/series volumes. Mounted in /tv/ (see examples for more details)
-kubernetes_sickrage_tv_volumes: {}
+kubernetes_sickchill_tv_volumes: {}
 # Watch directories. Useful when blackhole is used. Mounted in /watchdirs/ (see
 # examples for more details)
-kubernetes_sickrage_watchdirs_volumes: {}
+kubernetes_sickchill_watchdirs_volumes: {}
 
-# sickrage config volume. Contains the database, arts cache and config.
-kubernetes_sickrage_config_volume:
+# sickchill config volume. Contains the database, arts cache and config.
+kubernetes_sickchill_config_volume:
   definition:
 ```
 
@@ -77,7 +77,7 @@ Example Playbook
 - hosts: kube-master
   run_once: true
   vars:
-    kubernetes_sickrage_downloads_volumes:
+    kubernetes_sickchill_downloads_volumes:
       # This volume will be mounted as /downloads/completed
       completed:
         definition:
@@ -87,7 +87,7 @@ Example Playbook
             readOnly: false
         subPath: "completed"
 
-    kubernetes_sickrage_tv_volumes:
+    kubernetes_sickchill_tv_volumes:
       # This volume will be mounted as /tv/global
       global:
         definition:
@@ -97,7 +97,7 @@ Example Playbook
             readOnly: false
 
     # Directories watched by our torrents client
-    kubernetes_sickrage_watchdirs_volumes:
+    kubernetes_sickchill_watchdirs_volumes:
       # This volume will be mounted as /watchdirs/providers
       providers:
         definition:
@@ -107,30 +107,30 @@ Example Playbook
             readOnly: false
         subPath: "example/providers"
 
-    kubernetes_sickrage_config_volume:
+    kubernetes_sickchill_config_volume:
       definition:
         glusterfs:
           endpoints: gluster-example-cluster
-          path: volume-sickrage
+          path: volume-sickchill
           readOnly: false
         subPath: "config"
 
-    kubernetes_sickrage_setup_ingress: true
-    kubernetes_sickrage_ingress:
-      name: "sickrage-ingress"
-      host: "sickrage.example.com"
+    kubernetes_sickchill_setup_ingress: true
+    kubernetes_sickchill_ingress:
+      name: "sickchill-ingress"
+      host: "sickchill.example.com"
       annotations:
         kubernetes.io/tls-acme: "true"
       tls:
-        - secretName: "sickrage-ingress-tls"
+        - secretName: "sickchill-ingress-tls"
           hosts:
-            - "sickrage.example.com"
+            - "sickchill.example.com"
   roles:
-    - role: Anthony25.kubernetes-sickrage
+    - role: Anthony25.kubernetes-sickchill
 ```
 
 Use `run_once` to run the role on only one available master in the cluster.
-If the Sickrage web interface is not reachable, please check that it is
+If the sickchill web interface is not reachable, please check that it is
 listening on `0.0.0.0:5050`, and not only `localhost:5050` as the default is.
 
 License
