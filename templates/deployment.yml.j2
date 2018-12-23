@@ -39,7 +39,7 @@ spec:
           initialDelaySeconds: 60
           periodSeconds: 20
         volumeMounts:
-        - mountPath: /config
+        - mountPath: /data
           name: sickchill-config
           {% if kubernetes_sickchill_config_volume.subPath is defined %}subPath: {{ kubernetes_sickchill_config_volume.subPath }}{% endif %}
 
