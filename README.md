@@ -126,7 +126,7 @@ Example Playbook
           hosts:
             - "sickchill.example.com"
   roles:
-    - role: Anthony25.kubernetes-sickchill
+    - role: Anthony25.kubernetes_sickchill
 ```
 
 Use `run_once` to run the role on only one available master in the cluster.
