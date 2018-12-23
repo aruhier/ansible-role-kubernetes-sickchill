@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: kubernetes-sickchill
   author: Anthony Ruhier (Anthony25)
   description: Install sickchill on Kubernetes
   issue_tracker_url: https://github.com/Anthony25/ansible-role-kubernetes-sickchill/issues
