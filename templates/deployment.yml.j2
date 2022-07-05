@@ -15,6 +15,8 @@ metadata:
 spec:
   replicas: {{ kubernetes_sickchill_replicas }}
   revisionHistoryLimit: {{ kubernetes_sickchill_revision_history }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: {{ kubernetes_sickchill_app }}
