@@ -16,7 +16,7 @@ kubernetes_sickchill_deployment_annotations: {}
 
 kubernetes_sickchill_resources:
   limits:
-    memory: "756Mi"
+    memory: "2Gi"
   requests:
     memory: "256Mi"
 
