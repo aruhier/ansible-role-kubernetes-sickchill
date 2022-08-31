@@ -1,6 +1,6 @@
 ---
 
-kubernetes_sickchill_image: "sickchill/sickchill:master"
+kubernetes_sickchill_image: "lscr.io/linuxserver/sickchill:latest"
 
 kubernetes_sickchill_namespace: "default"
 kubernetes_sickchill_deployment: "sickchill-deployment"
